@@ -18,7 +18,7 @@ layout: default
 
 ---
 
-# <i class="fas fa-user"></i>About Me
+# 👤 </i>About Me
 
 I am a Ph.D. scholar at the **Centre for Linguistic Science and Technology, Indian Institute of Technology Guwahati**, specializing in the intersection of **Natural Language Processing** (NLP), **Computer Vision** (CV), also known as **Vision-Language Understanding** (VLU).
 
@@ -39,14 +39,14 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-# <i class="fas fa-graduation-cap"></i> Education
+# 🎓 </i> Education
 - **Ph.D.** – Centre for Linguistic Science and Technology, IIT Guwahati  
 - **M.Tech. (CSE)** – Assam University, Silchar (*2016*)  
 - **B.Tech. (CSE)** – Don Bosco College of Engineering & Technology, Guwahati (*2012*)  
 
 ---
 
-# <i class="fas fa-briefcase"></i> Experience
+# 💼 Experience
 
 - **Freelance Faculty** – *Imarticus Learning* (Jan 2023 – Jul 2024)  
   Taught Artificial Intelligence & Machine Learning.  
@@ -62,7 +62,16 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-# <i class="fas fa-lightbulb"></i> Research Interests
+
+# 🗣️ Invited Talks
+
+- **Harnessing the Power of AI: A Comprehensive FDP for Faculty and Researchers** – *E&ICT, IIT Guwahati*  
+- **Summer Internship Program on Generative AI and Internet of Things** – *Assam Don Bosco University*  
+- **High End Workshop on Fundamentals of Deep Learning** – *IIT Guwahati*  
+
+---
+
+# 💡 </i> Research Interests
 
 My research focuses on the intersection of **Natural Language Processing (NLP)**, **Computer Vision (CV)** known as **Vision–Language Understanding (VLU)**, with an emphasis on **low-resource Indian languages**. 
 
@@ -76,9 +85,9 @@ My doctoral thesis specifically focuses on **Automatic Image Caption generation 
 
 ---
 
-# <i class="fas fa-book"></i> Publications  
+# 📖 Publications  
 
-## <i class="fas fa-journal-whills"></i> Journal Publications 
+## 📜 Journal Publications 
 
 **1.** **P. Choudhury**, S. Nair, P. Guha, S. Nandi  
 **Image Captioning in Low Resource Assamese Language with Semantic Information Prior and Spatially Encoded Transformer Model**  
@@ -97,7 +106,7 @@ My doctoral thesis specifically focuses on **Automatic Image Caption generation 
 
 ---
 
-## <i class="fas fa-chalkboard-teacher"></i> Conference Publications  
+## 🎤 Conference Publications  
 
 **1.** **P. Choudhury**, P. Guha, S. Nandi  
 **Relevance of Language-Specific Training on Image Caption Synthesis for Low Resource Assamese Language**  
