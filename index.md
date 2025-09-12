@@ -42,7 +42,7 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-## Experience
+# Experience
 <!-- - **Computer Science Researcher** – *Turing* (Nov 2024 – Apr 2025)   -->
   <!-- Worked as Data Analyst (STEM, Multimodal, GAIA) and LLM Trainer.   -->
 
@@ -82,17 +82,17 @@ My doctoral thesis specifically focuses on **Automatic Image Caption generation 
 
 ## Journal Publications  
 
-**J1.** **P. Choudhury**, S. Nair, P. Guha, S. Nandi  
+**1.** **P. Choudhury**, S. Nair, P. Guha, S. Nandi  
 *Image Captioning in Low Resource Assamese Language with Semantic Information Prior and Spatially Encoded Transformer Model*  
 **Expert Systems with Applications, 2025, Vol. 297, p.129479**  
 [Link](https://www.sciencedirect.com/science/article/pii/S0957417425030957)  
 
-**J2.** **P. Choudhury**, P. Guha, S. Nandi  
+**2.** **P. Choudhury**, P. Guha, S. Nandi  
 *Exploring Semantic Attributes for Image Caption Synthesis in Low-Resource Assamese Language*  
 **ACM Transactions on Asian and Low-Resource Language Information Processing (TALLIP), 2025**  
 [Link](https://dl.acm.org/doi/10.1145/3717612)  
 
-**J3.** **P. Choudhury**, P. Guha, S. Nandi  
+**3.** **P. Choudhury**, P. Guha, S. Nandi  
 *Impact of Language-Specific Training on Image Caption Synthesis: A Case Study on Low-Resource Assamese Language*  
 **International Journal of Asian Language Processing, 2024**  
 [Link](https://doi.org/10.1142/S2717554524500048)  
@@ -101,37 +101,37 @@ My doctoral thesis specifically focuses on **Automatic Image Caption generation 
 
 ## Conference Publications  
 
-**C1.** **P. Choudhury**, P. Guha, S. Nandi  
+**1.** **P. Choudhury**, P. Guha, S. Nandi  
 *Relevance of Language-Specific Training on Image Caption Synthesis for Low Resource Assamese Language*  
 **International Conference on Asian Language Processing (IALP), Singapore, 2023, pp. 13–18**  
 [Link](https://doi.org/10.1109/IALP61005.2023.10337310)  
 
-**C2.** **P. Choudhury**, P. Guha, S. Nandi  
+**2.** **P. Choudhury**, P. Guha, S. Nandi  
 *Image Caption Synthesis for Low Resource Assamese Language using Bi-LSTM with Bilinear Attention*  
 **Proceedings of the 37th Pacific Asia Conference on Language, Information and Computation (PACLIC), 2023, pp. 743–752**  
 [Link](https://aclanthology.org/2023.paclic-1.74/)  
 
-**C3.** **P. Choudhury**, Y. Aggarwal, P. Jadhav, P. Guha, S. Nandi  
+**3.** **P. Choudhury**, Y. Aggarwal, P. Jadhav, P. Guha, S. Nandi  
 *AC-Lite: A Lightweight Image Captioning Model for Low-Resource Assamese Language*  
 **Accepted at CVIP-2025 (to appear)**  
 [Link](https://arxiv.org/abs/2503.01453)  
 
-**C4.** N. Rahman, **P. Choudhury**, P. Guha, A. Anand, S. Nandi  
+**4.** N. Rahman, **P. Choudhury**, P. Guha, A. Anand, S. Nandi  
 *Visual Question Answering in Low-Resource Assamese Language – Datasets and Evaluation*  
 **9th International Conference on Computer Vision and Image Processing (CVIP), Springer LNCS, 2024, pp. 159–174**  
 [Link](https://link.springer.com/chapter/10.1007/978-3-031-93697-5_12)  
 
-**C5.** Y. Aggarwal, **P. Choudhury**, P. Guha  
+**5.** Y. Aggarwal, **P. Choudhury**, P. Guha  
 *Face Detection in Challenging Scenes with a Customized Backbone*  
 **8th International Conference on Computer Vision & Image Processing (CVIP-2023), pp. 468–482**  
 [Link](https://link.springer.com/chapter/10.1007/978-3-031-58535-7_39)  
 
-**C6.** C. Kirti, **P. Choudhury**, A. Anand, P. Guha  
+**6.** C. Kirti, **P. Choudhury**, A. Anand, P. Guha  
 *An Annotated Corpus for Realis Event Detection in Short Stories Written in English and Low Resource Assamese Language*  
 **20th International Conference on Natural Language Processing (ICON), 2023, pp. 72–81**  
 [Link](https://aclanthology.org/2023.icon-1.8/)  
 
-**C7.** M. P. Lahkar, A. Gogoi, **P. Choudhury**  
+**7.** M. P. Lahkar, A. Gogoi, **P. Choudhury**  
 *AsCul: Annotated Dataset and a Deep Learning based Framework for Assamese Cultural Object Detection*  
 **International Conference on Intelligent Systems, Advanced Computing and Communication (ISACC), 2023, pp. 1–5**  
 [Link](https://doi.org/10.1109/ISACC56298.2023.10084269)  
