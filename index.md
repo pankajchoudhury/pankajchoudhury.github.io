@@ -7,7 +7,7 @@ layout: default
 <p>Centre for Linguistic Science and Technology</p>
 <p>Indian Institute of Technology, Guwahati</p>
 
-📧 [pankajchoudhury@iitg.ac.in](mailto:pankajchoudhury@iitg.ac.in)  
+📧 [pankajchoudhury[AT]iitg.ac.in](mailto:pankajchoudhury[AT]iitg.ac.in)  
 
 <a href="https://www.linkedin.com/in/pankaj-choudhury-124658252/" target="_blank">
 <i class="fab fa-linkedin fa-lg"></i> LinkedIn</a> &nbsp; | &nbsp; 
@@ -18,7 +18,7 @@ layout: default
 
 ---
 
-# About Me
+# <i class="fas fa-user"></i>About Me
 
 I am a Ph.D. scholar at the **Centre for Linguistic Science and Technology, Indian Institute of Technology Guwahati**, specializing in the intersection of **Natural Language Processing** (NLP), **Computer Vision** (CV), also known as **Vision-Language Understanding** (VLU).
 
@@ -39,14 +39,14 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-# Education
+# <i class="fas fa-graduation-cap"></i> Education
 - **Ph.D.** – Centre for Linguistic Science and Technology, IIT Guwahati  
 - **M.Tech. (CSE)** – Assam University, Silchar (*2016*)  
 - **B.Tech. (CSE)** – Don Bosco College of Engineering & Technology, Guwahati (*2012*)  
 
 ---
 
-# Experience
+# <i class="fas fa-briefcase"></i> Experience
 
 - **Freelance Faculty** – *Imarticus Learning* (Jan 2023 – Jul 2024)  
   Taught Artificial Intelligence & Machine Learning.  
@@ -62,7 +62,7 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-# Research Interests
+# <i class="fas fa-lightbulb"></i> Research Interests
 
 My research focuses on the intersection of **Natural Language Processing (NLP)**, **Computer Vision (CV)** known as **Vision–Language Understanding (VLU)**, with an emphasis on **low-resource Indian languages**. 
 
@@ -76,9 +76,9 @@ My doctoral thesis specifically focuses on **Automatic Image Caption generation 
 
 ---
 
-# Publications  
+# <i class="fas fa-book"></i> Publications  
 
-## Journal Publications  
+## <i class="fas fa-journal-whills"></i> Journal Publications 
 
 **1.** **P. Choudhury**, S. Nair, P. Guha, S. Nandi  
 **Image Captioning in Low Resource Assamese Language with Semantic Information Prior and Spatially Encoded Transformer Model**  
@@ -97,7 +97,7 @@ My doctoral thesis specifically focuses on **Automatic Image Caption generation 
 
 ---
 
-## Conference Publications  
+## <i class="fas fa-chalkboard-teacher"></i> Conference Publications  
 
 **1.** **P. Choudhury**, P. Guha, S. Nandi  
 **Relevance of Language-Specific Training on Image Caption Synthesis for Low Resource Assamese Language**  
