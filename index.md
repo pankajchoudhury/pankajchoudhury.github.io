@@ -18,7 +18,7 @@ layout: default
 
 ---
 
-# 👤 </i>About Me
+# 👤 About Me
 
 I am a Ph.D. scholar at the **Centre for Linguistic Science and Technology, Indian Institute of Technology Guwahati**, specializing in the intersection of **Natural Language Processing** (NLP), **Computer Vision** (CV), also known as **Vision-Language Understanding** (VLU).
 
@@ -39,7 +39,7 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-# 🎓 </i> Education
+# 🎓  Education
 - **Ph.D.** – Centre for Linguistic Science and Technology, IIT Guwahati  
 - **M.Tech. (CSE)** – Assam University, Silchar (*2016*)  
 - **B.Tech. (CSE)** – Don Bosco College of Engineering & Technology, Guwahati (*2012*)  
@@ -71,7 +71,7 @@ My long-term vision is to build scalable, inclusive AI frameworks that not only 
 
 ---
 
-# 💡 </i> Research Interests
+# 💡  Research Interests
 
 My research focuses on the intersection of **Natural Language Processing (NLP)**, **Computer Vision (CV)** known as **Vision–Language Understanding (VLU)**, with an emphasis on **low-resource Indian languages**. 
 
