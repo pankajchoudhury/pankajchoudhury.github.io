@@ -1,6 +1,6 @@
 ---
-# layout: default
-layout: index
+layout: default
+# layout: index
 ---
 
 **Research Scholar**
