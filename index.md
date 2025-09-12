@@ -1,5 +1,6 @@
 ---
-layout: default
+# layout: default
+layout: index
 ---
 
 **Research Scholar**
@@ -9,7 +10,7 @@ layout: default
 IIT Guwahati
 
 
-📧 [pankajchoudhury@iitg.ac.in](mailto:pankajchoudhury[AT]iitg.ac.in)  
+📧 [pankajchoudhury[AT]iitg.ac.in](mailto:pankajchoudhury[AT]iitg.ac.in)  
 🌐 [LinkedIn](https://www.linkedin.com/in/pankaj-choudhury-124658252/) | [HuggingFace](https://huggingface.co/BharatVLM/AssameseGPT2)  
 
 ---
