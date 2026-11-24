@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dr. Pankaj Choudhury | Vision-Language AI for Low-Resource Languages</title>
+<meta name="description" content="Dr. Pankaj Choudhury: vision-language models, Assamese image captioning and efficient AI. Guest Faculty at NIT Meghalaya; Ph.D., CLST, IIT Guwahati.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dr. Pankaj Choudhury">
+<meta property="og:description" content="Vision-language models for low-resource Indian languages, Assamese image captioning, and efficient edge AI.">
+<meta property="og:url" content="https://pankajchoudhury.github.io/">
+<meta property="og:image" content="https://pankajchoudhury.github.io/assets/img/PANKAJ_NEW_1_ROUNDED.png">
+<link rel="icon" href="assets/img/PANKAJ_NEW_1_ROUNDED.png">
+
+<script>
+  /* Pick the colour theme before the page paints (saved choice, else system setting). */
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (!t && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+    document.documentElement.setAttribute('data-theme', t || 'light');
+  })();
+</script>
+
+<style>
+  :root {
+    --bg: #f5f7fa; --card: #ffffff; --text: #1c2430; --muted: #5f6b7a; --line: #e3e8ee; --hover: #eaeef3;
+    --accent: #0b7a6e; --accent-soft: #e3f3f0; --on-accent: #ffffff;
+    --amber: #a95b06; --amber-soft: #fcefdc;
+    --bar: rgba(245, 247, 250, .88);
+    --shadow: 0 1px 2px rgba(16, 24, 40, .05), 0 6px 20px rgba(16, 24, 40, .06);
+    --radius: 14px;
+    --serif: Georgia, "Times New Roman", serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0d1117; --card: #151b23; --text: #e6edf3; --muted: #9aa6b4; --line: #27303b; --hover: #1d2530;
+    --accent: #3ccfbd; --accent-soft: #12302c; --on-accent: #05211e;
+    --amber: #f2b35b; --amber-soft: #35260f;
+    --bar: rgba(13, 17, 23, .85);
+    --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    transition: background .25s, color .25s;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  .skip { position: absolute; left: -9999px; top: 8px; background: var(--card); padding: 8px 12px; border-radius: 8px; z-index: 50; }
+  .skip:focus { left: 8px; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden; color: #fff;
+    background: linear-gradient(135deg, #0b5f57 0%, #123a5c 100%);
+    padding: 56px 0 92px;
+  }
+  [data-theme="dark"] .hero { background: linear-gradient(135deg, #07403a 0%, #0b1f33 100%); }
+  .hero-inner { position: relative; display: flex; gap: 32px; align-items: center; }
+  .hero-text { flex: 1 1 auto; max-width: 540px; }
+
+  /* Hero illustration: a small vision-language model at work. The script at the end animates it. */
+  .hero-art { flex: 0 0 360px; width: 360px; height: auto; margin-left: auto; overflow: visible; }
+  .hero-art text { fill: #fff; font-family: inherit; }
+  .hero-art .lbl { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-anchor: middle; fill-opacity: .8; }
+  .hero-art .legend { font-size: 9px; font-style: italic; fill: #ffe08a; }
+  .hero-art .lang { fill: #ffe08a; fill-opacity: 1; }
+  .hero-art .frame { fill: #fff; fill-opacity: .06; stroke: #fff; stroke-opacity: .7; stroke-width: 1.4; }
+  .hero-art .scene { fill: none; stroke: #fff; stroke-opacity: .9; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-art .grid { fill: none; stroke: #fff; stroke-opacity: .3; stroke-dasharray: 2 3; }
+  .hero-art .patch { fill: #ffe08a; fill-opacity: 0; transition: fill-opacity .4s, opacity .4s; }
+  .hero-art .patch.on { fill-opacity: .55; }
+  .hero-art .patch.past { fill-opacity: .18; }
+  .hero-art .arrow { fill: none; stroke: #fff; stroke-opacity: .6; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+  .hero-art .layer { fill: #fff; fill-opacity: .07; stroke: #fff; stroke-opacity: .65; stroke-width: 1.2; transition: fill-opacity .3s; }
+  .hero-art .busy .layer { fill-opacity: .24; }
+  .hero-art .vtok { fill: #fff; fill-opacity: .1; stroke: #fff; stroke-opacity: .55; transition: fill .25s, fill-opacity .25s; }
+  .hero-art .vtok.on { fill: #ffe08a; fill-opacity: .85; }
+  .hero-art .axis { fill: none; stroke: #fff; stroke-opacity: .55; stroke-width: 1.2; }
+  .hero-art .loss { fill: none; stroke: #ffe08a; stroke-width: 1.8; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; }
+  .hero-art .loss.run { animation: draw 3.2s ease-out both; }
+  .hero-art .tok { fill: #fff; fill-opacity: .05; stroke: #fff; stroke-opacity: .45; stroke-width: 1.2; transition: fill-opacity .3s, stroke-opacity .3s; }
+  .hero-art .tok.on { fill-opacity: .16; stroke-opacity: .95; }
+  .hero-art .letter {
+    font-size: 17px; text-anchor: middle; dominant-baseline: central; opacity: 0; transition: opacity .3s;
+    font-family: "Nirmala UI", "Noto Sans", "Segoe UI", system-ui, sans-serif;
+  }
+  .hero-art .letter.on { opacity: 1; }
+  .hero-art .attn {
+    fill: none; stroke: #ffe08a; stroke-width: 1.4; stroke-linecap: round; stroke-dasharray: 3 4;
+    opacity: 0; transition: opacity .3s; animation: flow 1s linear infinite;
+  }
+  .hero-art .attn.on { opacity: .95; }
+  .hero-art .attn.past { opacity: .2; }
+  .hero-art.swap .letter, .hero-art.swap .attn, .hero-art.swap .patch { opacity: 0; }
+  @keyframes flow { to { stroke-dashoffset: -14; } }
+  @keyframes draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  @media (max-width: 1059px) { .hero-art { display: none; } }
+  .avatar {
+    width: 156px; height: 156px; flex: none; border-radius: 50%; object-fit: cover;
+    border: 4px solid rgba(255, 255, 255, .85); box-shadow: 0 8px 30px rgba(0, 0, 0, .25); background: #0b5f57;
+  }
+  .eyebrow { margin: 0 0 6px; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+  .hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 4vw, 2.6rem); line-height: 1.15; }
+  .role { margin: 6px 0 0; font-size: 1.02rem; opacity: .95; }
+  .tagline { margin: 14px 0 0; max-width: 620px; opacity: .9; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 999px;
+    background: rgba(255, 255, 255, .12); border: 1px solid rgba(255, 255, 255, .22);
+    color: #fff; font-size: .88rem; font-weight: 500; transition: background .2s, transform .2s;
+  }
+  .pill:hover { background: rgba(255, 255, 255, .22); text-decoration: none; transform: translateY(-1px); }
+  .pill svg { width: 16px; height: 16px; flex: none; }
+  .pill.primary { background: #fff; color: #0b5f57; border-color: #fff; font-weight: 600; }
+  .pill.primary:hover { background: #e9f7f5; }
+  .theme-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 3; width: 40px; height: 40px; border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .25); background: rgba(255, 255, 255, .12);
+    font-size: 1.1rem; cursor: pointer; line-height: 1;
+  }
+  .theme-toggle:hover { background: rgba(255, 255, 255, .22); }
+
+  /* ---------- Stats ---------- */
+  .stats {
+    position: relative; z-index: 2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    margin: -56px 0 24px;
+  }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
+  .stat b { display: block; font-family: var(--serif); font-size: 1.9rem; line-height: 1.1; color: var(--accent); }
+  .stat span { font-size: .85rem; color: var(--muted); }
+
+  /* ---------- Tabs ---------- */
+  .tabbar {
+    position: sticky; top: 0; z-index: 10; background: var(--bar); border-bottom: 1px solid var(--line);
+    -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px);
+  }
+  .tabs { position: relative; display: flex; gap: 4px; padding: 8px 0; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    appearance: none; -webkit-appearance: none; border: 0; background: transparent; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 9px 16px; border-radius: 999px; color: var(--muted);
+    font: inherit; font-size: .93rem; font-weight: 600; transition: background .2s, color .2s;
+  }
+  .tab:hover { color: var(--text); background: var(--hover); }
+  .tab[aria-selected="true"] { background: var(--accent); color: var(--on-accent); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .count { font-size: .72rem; padding: 1px 7px; border-radius: 999px; background: var(--line); color: var(--muted); }
+  .tab[aria-selected="true"] .count { background: rgba(255, 255, 255, .25); color: inherit; }
+
+  /* ---------- Panels & shared blocks ---------- */
+  main { padding: 28px 20px 48px; }
+  .panel { animation: fade .35s ease; }
+  .panel:focus { outline: none; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  h2 { margin: 0 0 12px; font-family: var(--serif); font-size: 1.35rem; line-height: 1.3; }
+  h3 { margin: 0 0 6px; font-size: 1.05rem; line-height: 1.35; }
+  p { margin: 0 0 12px; }
+  .section-title { display: flex; align-items: center; gap: 12px; margin: 36px 0 14px; font-family: var(--serif); font-size: 1.2rem; }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .card > :last-child { margin-bottom: 0; }
+  .kicker { margin: 0 0 6px; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .muted { color: var(--muted); }
+  .grid-2 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; align-items: start; }
+  .stack > * + * { margin-top: 20px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { padding: 5px 11px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .82rem; font-weight: 600; }
+  .chip.plain { background: var(--hover); color: var(--text); font-weight: 500; }
+  .more { display: inline-block; margin-top: 14px; font-weight: 600; }
+  .icon { font-size: 1.5rem; line-height: 1; margin-bottom: 10px; }
+
+  /* Education */
+  .edu { list-style: none; margin: 0; padding: 0; }
+  .edu li { padding: 10px 0; border-top: 1px dashed var(--line); }
+  .edu li:first-child { border-top: 0; padding-top: 0; }
+  .edu b { display: block; }
+  .edu small { color: var(--muted); font-size: .86rem; }
+
+  /* Highlights */
+  .news { list-style: none; margin: 0; padding: 0; }
+  .news li { display: grid; grid-template-columns: 90px 1fr; gap: 14px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .news li:first-child { border-top: 0; padding-top: 0; }
+  .news time { font-size: .88rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+
+  /* Venue tags */
+  .venue, .tag { display: inline-grid; place-items: center; border-radius: 7px; font-weight: 800; font-size: .74rem; }
+  .venue { padding: 2px 8px; margin-bottom: 8px; align-self: flex-start; }
+  .j { background: var(--amber-soft); color: var(--amber); }
+  .c { background: var(--accent-soft); color: var(--accent); }
+  .featured { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .featured .card { display: flex; flex-direction: column; }
+  .featured h3 { font-size: .97rem; flex: 1; }
+  .featured a.read { font-size: .88rem; font-weight: 600; margin-top: 8px; align-self: flex-start; }
+
+  /* Research steps */
+  .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; counter-reset: step; }
+  .step { position: relative; padding-left: 68px; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 20px; top: 21px; width: 32px; height: 32px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--accent); color: var(--on-accent); font-weight: 700;
+  }
+  .refs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ref { padding: 2px 8px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); font-size: .75rem; font-weight: 700; }
+  .ref:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .mini { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .mini p { font-size: .93rem; }
+
+  /* Publications */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 6px; }
+  .filter {
+    border: 1px solid var(--line); background: var(--card); color: var(--text); cursor: pointer;
+    font: inherit; font-size: .88rem; padding: 6px 14px; border-radius: 999px;
+  }
+  .filter[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .search {
+    flex: 1; min-width: 180px; max-width: 320px; margin-left: auto; padding: 8px 14px;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--text); font: inherit; font-size: .9rem;
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .pub {
+    display: grid; grid-template-columns: 48px 1fr; gap: 14px; align-items: start;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px;
+    transition: border-color .2s;
+  }
+  .pub:hover { border-color: var(--accent); }
+  .pub .tag { height: 30px; }
+  .pub-title { margin: 0; font-weight: 650; line-height: 1.4; }
+  .pub-authors { margin: 4px 0 0; font-size: .9rem; color: var(--muted); }
+  .pub-authors b { color: var(--text); }
+  .pub-venue { margin: 2px 0 0; font-size: .9rem; font-style: italic; }
+  .pub-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .btn-sm { padding: 3px 10px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: .78rem; font-weight: 600; }
+  .btn-sm:hover { text-decoration: none; filter: brightness(.95); }
+  .pub.flash { animation: flash 2.2s ease; }
+  @keyframes flash { 0%, 45% { box-shadow: 0 0 0 3px var(--accent); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  /* Projects & datasets */
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .cards .card { display: flex; flex-direction: column; }
+  .cards .card .chips { margin-top: auto; padding-top: 6px; }
+  .proj-links { display: flex; gap: 8px; margin: 2px 0 12px; }
+  .ds { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .ds .card { padding: 16px 18px; }
+  .ds h3 { font-size: .98rem; margin-bottom: 4px; }
+  .ds p { font-size: .88rem; margin-bottom: 8px; }
+
+  /* Experience timeline */
+  .timeline { position: relative; list-style: none; margin: 0; padding: 0 0 0 26px; }
+  .timeline::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .timeline li { position: relative; margin-bottom: 14px; }
+  .timeline li::before {
+    content: ""; position: absolute; left: -26px; top: 24px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--card); border: 3px solid var(--accent);
+  }
+  .timeline li.now::before { background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .when { font-size: .82rem; font-weight: 700; color: var(--accent); }
+  .org { margin: 0 0 6px; color: var(--muted); font-size: .92rem; }
+  .skills { display: grid; gap: 14px; }
+  .skills h3 { font-size: .95rem; }
+
+  /* Teaching & talks */
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .talks { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .talks li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: start; }
+  .talks .icon { margin: 0; text-align: center; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--muted); font-size: .88rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+
+  /* ---------- Small screens ---------- */
+  @media (max-width: 760px) {
+    .hero { padding: 48px 0 84px; }
+    .hero-inner { flex-direction: column; text-align: center; gap: 20px; }
+    .tagline { margin-left: auto; margin-right: auto; }
+    .links { justify-content: center; }
+    .avatar { width: 128px; height: 128px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .steps, .cards, .featured, .three { grid-template-columns: 1fr; }
+    .search { max-width: none; margin-left: 0; }
+    .news li { grid-template-columns: 1fr; gap: 2px; }
+    main { padding-top: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+  /* Printing shows every tab, one after another. */
+  @media print {
+    .tabbar, .theme-toggle, .toolbar, .stats { display: none !important; }
+    [role="tabpanel"][hidden] { display: block !important; }
+    .hero { background: none !important; color: #000; padding: 0 0 16px; }
+    .pill { color: #000; border-color: #999; }
+    .hero-art { display: none; }
+    .card, .pub { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pankaj Choudhury",
+  "honorificPrefix": "Dr.",
+  "jobTitle": "Guest Faculty",
+  "worksFor": { "@type": "CollegeOrUniversity", "name": "National Institute of Technology Meghalaya" },
+  "alumniOf": [
+    { "@type": "CollegeOrUniversity", "name": "Indian Institute of Technology Guwahati" },
+    { "@type": "CollegeOrUniversity", "name": "Assam University, Silchar" },
+    { "@type": "CollegeOrUniversity", "name": "Assam Don Bosco University" }
+  ],
+  "url": "https://pankajchoudhury.github.io/",
+  "image": "https://pankajchoudhury.github.io/assets/img/PANKAJ_NEW_1_ROUNDED.png",
+  "sameAs": [
+    "https://scholar.google.com/citations?user=4V02c-wAAAAJ",
+    "https://github.com/pankajchoudhury",
+    "https://www.linkedin.com/in/dr-pankaj-choudhury-124658252",
+    "https://huggingface.co/BharatVLM"
+  ],
+  "knowsAbout": ["Vision-Language Models", "Image Captioning", "Assamese", "Multimodal Learning", "Efficient AI"]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch between light and dark mode">🌙</button>
+  <div class="wrap hero-inner">
+    <img class="avatar" src="assets/img/PANKAJ_NEW_1_ROUNDED.png" alt="Photo of Dr. Pankaj Choudhury"
+         onerror="this.onerror=null;this.src='https://pankajchoudhury.github.io/assets/img/PANKAJ_NEW_1_ROUNDED.png';">
+    <div class="hero-text">
+      <p class="eyebrow">Vision · Language · Efficient AI</p>
+      <h1>Dr. Pankaj Choudhury</h1>
+      <p class="role">Guest Faculty, NIT Meghalaya &nbsp;·&nbsp; Ph.D., CLST, IIT Guwahati</p>
+      <p class="tagline">I build vision-language models for low-resource Indian languages
+        and make them small enough to run on edge devices.</p>
+      <div class="links">
+        <a class="pill primary" href="assets/Pankaj_Choudhury_CV.pdf" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+          CV
+        </a>
+        <a class="pill js-email" href="#" data-u="pankajchoudhury2048" data-d="gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email
+        </a>
+        <a class="pill" href="https://scholar.google.com/citations?user=4V02c-wAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 2 9l10 5 10-5-10-5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/></svg>
+          Google Scholar
+        </a>
+        <a class="pill" href="https://github.com/pankajchoudhury" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub
+        </a>
+        <a class="pill" href="https://www.linkedin.com/in/dr-pankaj-choudhury-124658252" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17"/></svg>
+          LinkedIn
+        </a>
+        <a class="pill" href="https://huggingface.co/BharatVLM" target="_blank" rel="noopener">
+          <span aria-hidden="true">🤗</span> Hugging Face
+        </a>
+      </div>
+    </div>
+
+    <!-- A small vision-language model at work: image -> encoder -> decoder -> text, with cross-attention. -->
+    <svg class="hero-art" viewBox="0 0 380 256" aria-hidden="true" focusable="false">
+      <rect x="4" y="243" width="8" height="8" rx="2" fill="#ffe08a" fill-opacity=".8"/>
+      <text class="legend" x="17" y="250">attention</text>
+
+      <!-- 1. Input image: a child flying a kite, cut into 4x4 patches -->
+      <rect class="frame" x="4" y="24" width="112" height="112" rx="10"/>
+      <g class="patches"></g>
+      <g class="scene">
+        <circle cx="94" cy="44" r="8"/>
+        <path d="M4 120Q36 100 66 114Q92 126 116 108"/>
+        <path d="M40 34L50 48L40 62L30 48ZM30 48H50M40 34V62"/>
+        <path d="M40 62q-4 5 0 9q4 5 0 9"/>
+        <path d="M40 62Q52 90 73 98"/>
+        <circle cx="78" cy="92" r="4"/>
+        <path d="M78 96V108M78 108L74 116M78 108L82 116M78 99L73 98M78 99L84 104"/>
+      </g>
+      <path class="grid" d="M32 24V136M60 24V136M88 24V136M4 52H116M4 80H116M4 108H116"/>
+      <text class="lbl" x="60" y="19">IMAGE</text>
+
+      <path class="arrow" d="M122 80H136M132 76L136 80L132 84"/>
+
+      <!-- 2. Vision encoder -->
+      <g class="enc">
+        <rect class="layer" x="154" y="34" width="30" height="76" rx="6"/>
+        <rect class="layer" x="148" y="40" width="30" height="76" rx="6"/>
+        <rect class="layer" x="142" y="46" width="30" height="76" rx="6"/>
+      </g>
+      <text class="lbl" x="163" y="9">VISION</text>
+      <text class="lbl" x="163" y="20">ENCODER</text>
+
+      <path class="arrow" d="M190 80H202M198 76L202 80L198 84"/>
+
+      <!-- 3. Visual tokens -->
+      <rect class="vtok" x="207" y="47" width="10" height="10" rx="2"/>
+      <rect class="vtok" x="207" y="61" width="10" height="10" rx="2"/>
+      <rect class="vtok" x="207" y="75" width="10" height="10" rx="2"/>
+      <rect class="vtok" x="207" y="89" width="10" height="10" rx="2"/>
+      <rect class="vtok" x="207" y="103" width="10" height="10" rx="2"/>
+
+      <path class="arrow" d="M222 80H234M230 76L234 80L230 84"/>
+
+      <!-- 4. Language decoder -->
+      <g class="dec">
+        <rect class="layer" x="252" y="34" width="30" height="76" rx="6"/>
+        <rect class="layer" x="246" y="40" width="30" height="76" rx="6"/>
+        <rect class="layer" x="240" y="46" width="30" height="76" rx="6"/>
+      </g>
+      <text class="lbl" x="261" y="9">LANGUAGE</text>
+      <text class="lbl" x="261" y="20">DECODER</text>
+
+      <!-- 5. Learning: the training loss goes down -->
+      <path class="axis" d="M304 34V112H374"/>
+      <path class="loss" pathLength="100" d="M308 40C318 76 330 90 344 96S366 104 372 105"/>
+      <text class="lbl" x="339" y="9">TRAINING</text>
+      <text class="lbl" x="339" y="20">LOSS</text>
+
+      <!-- 6. Text comes out one token at a time; each token attends back to the image -->
+      <path class="arrow" d="M261 128V190M257 186L261 190L265 186"/>
+      <g class="attn-lines"></g>
+      <rect class="tok" x="48" y="196" width="42" height="32" rx="7"/><text class="letter" x="69" y="212"></text>
+      <rect class="tok" x="96" y="196" width="42" height="32" rx="7"/><text class="letter" x="117" y="212"></text>
+      <rect class="tok" x="144" y="196" width="42" height="32" rx="7"/><text class="letter" x="165" y="212"></text>
+      <rect class="tok" x="192" y="196" width="42" height="32" rx="7"/><text class="letter" x="213" y="212"></text>
+      <rect class="tok" x="240" y="196" width="42" height="32" rx="7"/><text class="letter" x="261" y="212"></text>
+      <rect class="tok" x="288" y="196" width="42" height="32" rx="7"/><text class="letter" x="309" y="212"></text>
+      <text class="lbl" x="189" y="250">OUTPUT TOKENS · <tspan class="lang">ASSAMESE</tspan></text>
+    </svg>
+  </div>
+</header>
+
+<!-- ===================== STATS ===================== -->
+<div class="wrap">
+  <section class="stats" aria-label="At a glance">
+    <div class="stat"><b data-count="12">12</b><span>Publications</span></div>
+    <div class="stat"><b data-count="3">3</b><span>Journal articles</span></div>
+    <div class="stat"><b data-count="3">3</b><span>Assamese caption datasets</span></div>
+    <div class="stat"><b data-count="1">1</b><span>Open Assamese LLM</span></div>
+  </section>
+</div>
+
+<!-- ===================== TABS ===================== -->
+<div id="tabs-top"></div>
+<nav class="tabbar" aria-label="Page sections">
+  <div class="wrap">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="true" data-tab="about">About</button>
+      <button class="tab" role="tab" id="tab-research" aria-controls="panel-research" aria-selected="false" tabindex="-1" data-tab="research">Research</button>
+      <button class="tab" role="tab" id="tab-publications" aria-controls="panel-publications" aria-selected="false" tabindex="-1" data-tab="publications">Publications <span class="count">12</span></button>
+      <button class="tab" role="tab" id="tab-projects" aria-controls="panel-projects" aria-selected="false" tabindex="-1" data-tab="projects">Projects &amp; Data</button>
+      <button class="tab" role="tab" id="tab-experience" aria-controls="panel-experience" aria-selected="false" tabindex="-1" data-tab="experience">Experience</button>
+      <button class="tab" role="tab" id="tab-teaching" aria-controls="panel-teaching" aria-selected="false" tabindex="-1" data-tab="teaching">Teaching &amp; Talks</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main" class="wrap">
+
+  <!-- ===================== ABOUT ===================== -->
+  <section class="panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabindex="0">
+    <div class="grid-2">
+      <div class="card">
+        <h2>About me</h2>
+        <p>I am a Guest Faculty member at the National Institute of Technology Meghalaya, where I teach
+          C Programming and Software Engineering. I recently completed my Ph.D. at the
+          <a href="https://www.iitg.ac.in/clst/index.php" target="_blank" rel="noopener">Centre for Linguistic Science and Technology</a>,
+          <a href="https://www.iitg.ac.in/" target="_blank" rel="noopener">IIT Guwahati</a>.</p>
+        <p>My research sits where vision meets language. For my Ph.D., I built automatic image captioning for
+          Assamese, a low-resource language. This covered dataset creation, transformer models for a
+          morphologically rich language, and data-efficient generation with a pretrained GPT-2. I have also
+          worked on visual question answering and, at Accenture AI Lab, on small vision-language models for
+          chart understanding and numerical reasoning.</p>
+        <p>I care about AI that works on modest hardware. I design lightweight models and have run a captioning
+          model on a Raspberry Pi 3. My long-term goal is resource-efficient, inclusive multimodal AI for
+          Indian languages.</p>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <p class="kicker">Research interests</p>
+          <div class="chips">
+            <span class="chip">Vision-Language Models</span>
+            <span class="chip">Image Captioning</span>
+            <span class="chip">Low-resource Indian Languages</span>
+            <span class="chip">Multimodal Learning</span>
+            <span class="chip">Large Language Models</span>
+            <span class="chip">Efficient &amp; Edge AI</span>
+            <span class="chip">Computer Vision</span>
+            <span class="chip">NLP</span>
+          </div>
+        </div>
+        <div class="card">
+          <p class="kicker">Education</p>
+          <ul class="edu">
+            <li><b>Ph.D. (Vision &amp; Language)</b>CLST, IIT Guwahati<br><small>2019 – 2026</small></li>
+            <li><b>M.Tech. (CSE)</b>Assam University, Silchar<br><small>2014 – 2016</small></li>
+            <li><b>B.Tech. (CSE)</b>Assam Don Bosco University, Guwahati<br><small>2008 – 2012</small></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Highlights</h2>
+    <div class="card">
+      <ul class="news">
+        <!-- Add new items at the top. Example:
+        <li><time>Mon YYYY</time><span>Your news here.</span></li> -->
+        <li><time>Aug 2026</time><span>Joined <b>NIT Meghalaya</b> as Guest Faculty. Teaching C Programming and Software Engineering to MCA students.</span></li>
+        <li><time>2026</time><span>Completed my <b>Ph.D.</b> at CLST, IIT Guwahati. Thesis: <i>Automatic Image Caption Synthesis for Low-Resource Assamese Language</i>.</span></li>
+        <li><time>Feb 2026</time><span>Started as <b>AI Research Intern at Accenture AI Lab</b>, Bengaluru (until Aug 2026), working on small VLMs for chart understanding.</span></li>
+        <li><time>2025</time><span>Three conference papers: <a href="#pub-C1">AsCap-GPT2</a> at PReMI-2025, <a href="#pub-C2">AC-Lite</a> at CVIP-2025, and <a href="#pub-C3">AsRED</a> at PACLIC-2025.</span></li>
+        <li><time>2025</time><span>Journal papers in <a href="#pub-J1">Expert Systems with Applications</a> and <a href="#pub-J2">ACM TALLIP</a>.</span></li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">Selected publications</h2>
+    <div class="featured">
+      <div class="card">
+        <span class="venue j">ESWA 2025</span>
+        <h3>Image Captioning in Low Resource Assamese Language with Semantic Information Prior and Spatially Encoded Transformer Model</h3>
+        <a class="read" href="#pub-J1">Details →</a>
+      </div>
+      <div class="card">
+        <span class="venue j">ACM TALLIP 2025</span>
+        <h3>Exploring Semantic Attributes for Image Caption Synthesis in Low-Resource Assamese Language</h3>
+        <a class="read" href="#pub-J2">Details →</a>
+      </div>
+      <div class="card">
+        <span class="venue c">PReMI 2025</span>
+        <h3>AsCap-GPT2: A Data Efficient Assamese Image Captioning Framework with Pretrained GPT-2</h3>
+        <a class="read" href="#pub-C1">Details →</a>
+      </div>
+    </div>
+    <a class="more" href="#publications">See all 12 publications →</a>
+  </section>
+
+  <!-- ===================== RESEARCH ===================== -->
+  <section class="panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" tabindex="0">
+    <div class="card">
+      <p class="kicker">Ph.D. thesis · IIT Guwahati · 2026</p>
+      <h2>Automatic Image Caption Synthesis for Low-Resource Assamese Language</h2>
+      <p>Two problems hold back image captioning in Assamese: there is very little data, and standard models
+        are not built for a morphologically rich language. My thesis tackles both. It creates and curates
+        several Assamese caption datasets and proposes new transformer architectures. Quantitative and
+        qualitative analysis shows that language-specific design matters for low-resource vision-language
+        generation.</p>
+      <p>Together, this work establishes the first complete framework for Assamese image captioning.</p>
+    </div>
+
+    <h2 class="section-title">The thesis in four steps</h2>
+    <div class="steps">
+      <div class="card step">
+        <h3>Train in Assamese, don't translate</h3>
+        <p>Training directly on Assamese captions works better than translating the output of an English captioning model.</p>
+        <div class="refs"><a class="ref" href="#pub-J3">J3</a><a class="ref" href="#pub-C5">C5</a></div>
+      </div>
+      <div class="card step">
+        <h3>Build the data</h3>
+        <p><b>COCO-AC</b> and <b>Flickr30K-AC</b>: large datasets translated from English and manually curated.
+          <b>ChitraLekha10K</b>: a culturally grounded dataset with native-speaker captions.</p>
+      </div>
+      <div class="card step">
+        <h3>Design the models</h3>
+        <p><b>VSSA</b> uses semantic attributes. <b>SPG-TFR</b> adds semantic priors and a spatially encoded
+          transformer. <b>VSB-TFR</b> adds bilinear attention and gives the best results.</p>
+        <div class="refs"><a class="ref" href="#pub-J2">J2</a><a class="ref" href="#pub-J1">J1</a><a class="ref" href="#pub-C6">C6</a></div>
+      </div>
+      <div class="card step">
+        <h3>Go pretrained and lightweight</h3>
+        <p><b>AsCap-GPT2</b> links visual features to a pretrained Assamese GPT-2 and learns from little data.
+          <b>AC-Lite</b> and <b>VSB-TFR-Lite</b> are built for low-resource devices. AC-Lite runs on a Raspberry Pi 3.</p>
+        <div class="refs"><a class="ref" href="#pub-C1">C1</a><a class="ref" href="#pub-C2">C2</a></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Beyond the thesis</h2>
+    <div class="mini">
+      <div class="card">
+        <div class="icon" aria-hidden="true">📊</div>
+        <h3>Chart understanding</h3>
+        <p>Improving small VLMs for chart understanding and numerical reasoning at Accenture AI Lab (2026).</p>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">❓</div>
+        <h3>Visual question answering</h3>
+        <p>Datasets and evaluation for VQA in Assamese.</p>
+        <div class="refs"><a class="ref" href="#pub-C4">C4</a></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🔤</div>
+        <h3>Assamese language resources</h3>
+        <p>A reduplication dataset (AsRED) and an annotated corpus for realis event detection in English and Assamese stories.</p>
+        <div class="refs"><a class="ref" href="#pub-C3">C3</a><a class="ref" href="#pub-C8">C8</a></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🏛️</div>
+        <h3>Cultural object detection</h3>
+        <p>AsCul: a dataset and deep-learning framework for detecting Assamese cultural objects.</p>
+        <div class="refs"><a class="ref" href="#pub-C9">C9</a></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🙂</div>
+        <h3>Face detection</h3>
+        <p>Face detection in challenging scenes with a customized backbone.</p>
+        <div class="refs"><a class="ref" href="#pub-C7">C7</a></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🤖</div>
+        <h3>An Assamese language model</h3>
+        <p>AssameseGPT2, trained from scratch on IndicCorpV2 and released openly.</p>
+        <div class="refs"><a class="ref" href="#projects">Projects</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PUBLICATIONS ===================== -->
+  <section class="panel" id="panel-publications" role="tabpanel" aria-labelledby="tab-publications" tabindex="0">
+    <div class="toolbar">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">All (12)</button>
+      <button class="filter" type="button" data-filter="journal" aria-pressed="false">Journals (3)</button>
+      <button class="filter" type="button" data-filter="conference" aria-pressed="false">Conferences (9)</button>
+      <input class="search" id="pub-search" type="search" placeholder="Search title, author, venue…" aria-label="Search publications">
+    </div>
+    <p class="muted" style="font-size:.88rem">Citation counts are on
+      <a href="https://scholar.google.com/citations?user=4V02c-wAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>.</p>
+
+    <div class="pub-group">
+      <h2 class="section-title">Journal articles</h2>
+      <ol class="pubs">
+        <li class="pub" id="pub-J1" data-type="journal">
+          <span class="tag j">J1</span>
+          <div>
+            <p class="pub-title">Image Captioning in Low Resource Assamese Language with Semantic Information Prior and Spatially Encoded Transformer Model</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, S. Nair, P. Guha and S. Nandi</p>
+            <p class="pub-venue">Expert Systems with Applications, vol. 297, 129479, 2025</p>
+            <div class="pub-links"><a class="btn-sm" href="https://www.sciencedirect.com/science/article/pii/S0957417425030957" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-J2" data-type="journal">
+          <span class="tag j">J2</span>
+          <div>
+            <p class="pub-title">Exploring Semantic Attributes for Image Caption Synthesis in Low-Resource Assamese Language</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, P. Guha and S. Nandi</p>
+            <p class="pub-venue">ACM Transactions on Asian and Low-Resource Language Information Processing (TALLIP), 2025</p>
+            <div class="pub-links"><a class="btn-sm" href="https://dl.acm.org/doi/10.1145/3717612" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-J3" data-type="journal">
+          <span class="tag j">J3</span>
+          <div>
+            <p class="pub-title">Impact of Language-Specific Training on Image Caption Synthesis: A Case Study on Low-Resource Assamese Language</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, P. Guha and S. Nandi</p>
+            <p class="pub-venue">International Journal of Asian Language Processing, 2024</p>
+            <div class="pub-links"><a class="btn-sm" href="https://doi.org/10.1142/S2717554524500048" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="pub-group">
+      <h2 class="section-title">Conference papers</h2>
+      <ol class="pubs">
+        <li class="pub" id="pub-C1" data-type="conference">
+          <span class="tag c">C1</span>
+          <div>
+            <p class="pub-title">AsCap-GPT2: A Data Efficient Assamese Image Captioning Framework with Pretrained GPT-2</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, P. Jadhav, P. Guha and S. Nandi</p>
+            <p class="pub-venue">11th International Conference on Pattern Recognition and Machine Intelligence (PReMI-2025), IIT Delhi</p>
+            <div class="pub-links"><a class="btn-sm" href="https://doi.org/10.1007/978-3-032-18480-1_50" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C2" data-type="conference">
+          <span class="tag c">C2</span>
+          <div>
+            <p class="pub-title">AC-Lite: A Lightweight Image Captioning Model for Low-Resource Assamese Language</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, Y. Aggarwal, P. Jadhav, P. Guha and S. Nandi</p>
+            <p class="pub-venue">10th International Conference on Computer Vision and Image Processing (CVIP-2025), IIT Ropar</p>
+            <div class="pub-links"><a class="btn-sm" href="https://arxiv.org/abs/2503.01453" target="_blank" rel="noopener">arXiv ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C3" data-type="conference">
+          <span class="tag c">C3</span>
+          <div>
+            <p class="pub-title">AsRED: Development and Evaluation of an Assamese Reduplication Dataset</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, C. Kirti, D. Pathak and S. Nandi</p>
+            <p class="pub-venue">39th Pacific Asia Conference on Language, Information and Computation (PACLIC-2025), Hanoi, Vietnam</p>
+            <div class="pub-links"><a class="btn-sm" href="https://aclanthology.org/2025.paclic-1.28/" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C4" data-type="conference">
+          <span class="tag c">C4</span>
+          <div>
+            <p class="pub-title">Visual Question Answering in Low-Resource Assamese Language: Datasets and Evaluation</p>
+            <p class="pub-authors">N. Rahman, <b>P. Choudhury</b>, P. Guha, A. Anand and S. Nandi</p>
+            <p class="pub-venue">9th International Conference on Computer Vision and Image Processing (CVIP), 2024, pp. 159–174</p>
+            <div class="pub-links"><a class="btn-sm" href="https://link.springer.com/chapter/10.1007/978-3-031-93697-5_12" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C5" data-type="conference">
+          <span class="tag c">C5</span>
+          <div>
+            <p class="pub-title">Relevance of Language-Specific Training on Image Caption Synthesis for Low Resource Assamese Language</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, P. Guha and S. Nandi</p>
+            <p class="pub-venue">International Conference on Asian Language Processing (IALP), Singapore, 2023, pp. 13–18</p>
+            <div class="pub-links"><a class="btn-sm" href="https://doi.org/10.1109/IALP61005.2023.10337310" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C6" data-type="conference">
+          <span class="tag c">C6</span>
+          <div>
+            <p class="pub-title">Image Caption Synthesis for Low Resource Assamese Language using Bi-LSTM with Bilinear Attention</p>
+            <p class="pub-authors"><b>P. Choudhury</b>, P. Guha and S. Nandi</p>
+            <p class="pub-venue">37th Pacific Asia Conference on Language, Information and Computation (PACLIC), 2023, pp. 743–752</p>
+            <div class="pub-links"><a class="btn-sm" href="https://aclanthology.org/2023.paclic-1.74/" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C7" data-type="conference">
+          <span class="tag c">C7</span>
+          <div>
+            <p class="pub-title">Face Detection in Challenging Scenes with a Customized Backbone</p>
+            <p class="pub-authors">Y. Aggarwal, <b>P. Choudhury</b> and P. Guha</p>
+            <p class="pub-venue">8th International Conference on Computer Vision &amp; Image Processing (CVIP), 2023, pp. 468–482</p>
+            <div class="pub-links"><a class="btn-sm" href="https://link.springer.com/chapter/10.1007/978-3-031-58535-7_39" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C8" data-type="conference">
+          <span class="tag c">C8</span>
+          <div>
+            <p class="pub-title">An Annotated Corpus for Realis Event Detection in Short Stories Written in English and Low Resource Assamese Language</p>
+            <p class="pub-authors">C. Kirti, <b>P. Choudhury</b>, A. Anand and P. Guha</p>
+            <p class="pub-venue">International Conference on Natural Language Processing (ICON), 2023, pp. 72–81</p>
+            <div class="pub-links"><a class="btn-sm" href="https://aclanthology.org/2023.icon-1.8/" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+        <li class="pub" id="pub-C9" data-type="conference">
+          <span class="tag c">C9</span>
+          <div>
+            <p class="pub-title">AsCul: Annotated Dataset and a Deep Learning based Framework for Assamese Cultural Object Detection</p>
+            <p class="pub-authors">M. P. Lahkar, A. Gogoi and <b>P. Choudhury</b></p>
+            <p class="pub-venue">ISACC, 2023, pp. 1–5</p>
+            <div class="pub-links"><a class="btn-sm" href="https://doi.org/10.1109/ISACC56298.2023.10084269" target="_blank" rel="noopener">Paper ↗</a></div>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <p class="muted" id="pub-empty" hidden>No publications match your search.</p>
+  </section>
+
+  <!-- ===================== PROJECTS & DATA ===================== -->
+  <section class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" tabindex="0">
+    <div class="cards">
+      <div class="card">
+        <div class="icon" aria-hidden="true">🤗</div>
+        <p class="kicker">Open model</p>
+        <h3>AssameseGPT2</h3>
+        <p>A GPT-2 language model for Assamese, trained from scratch on IndicCorpV2 and released publicly on Hugging Face.</p>
+        <div class="proj-links"><a class="btn-sm" href="https://huggingface.co/BharatVLM/AssameseGPT2" target="_blank" rel="noopener">Model on Hugging Face ↗</a></div>
+        <div class="chips"><span class="chip plain">LLM</span><span class="chip plain">Assamese</span><span class="chip plain">Pretraining</span></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🖼️</div>
+        <p class="kicker">Vision-language</p>
+        <h3>AsCap-GPT2</h3>
+        <p>Joins a pretrained GPT-2 decoder with visual features for Assamese captioning. Explores few-shot training,
+          cross-entropy fine-tuning and self-critical sequence training (SCST).</p>
+        <div class="proj-links"><a class="btn-sm" href="#pub-C1">Paper (PReMI-2025)</a></div>
+        <div class="chips"><span class="chip plain">VLM</span><span class="chip plain">Data-efficient</span><span class="chip plain">SCST</span></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🍓</div>
+        <p class="kicker">Efficient AI</p>
+        <h3>AC-Lite</h3>
+        <p>A lightweight Assamese image captioning model. I deployed it on a Raspberry Pi 3 to test whether captioning works on low-resource edge hardware.</p>
+        <div class="proj-links"><a class="btn-sm" href="https://arxiv.org/abs/2503.01453" target="_blank" rel="noopener">arXiv ↗</a><a class="btn-sm" href="#pub-C2">Paper (CVIP-2025)</a></div>
+        <div class="chips"><span class="chip plain">Edge AI</span><span class="chip plain">Raspberry Pi</span><span class="chip plain">Captioning</span></div>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">📈</div>
+        <p class="kicker">Accenture AI Lab · 2026</p>
+        <h3>Small VLMs for chart understanding</h3>
+        <p>Improved small vision-language models for multimodal chart understanding and numerical reasoning.</p>
+        <div class="chips"><span class="chip plain">Small VLMs</span><span class="chip plain">Charts</span><span class="chip plain">Reasoning</span></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Datasets</h2>
+    <div class="ds">
+      <div class="card">
+        <h3>COCO-AC</h3>
+        <p>Assamese captions for COCO images. Translated from English and manually curated.</p>
+        <span class="chip plain">Captioning</span>
+      </div>
+      <div class="card">
+        <h3>Flickr30K-AC</h3>
+        <p>Assamese captions for Flickr30K images. Translated from English and manually curated.</p>
+        <span class="chip plain">Captioning</span>
+      </div>
+      <div class="card">
+        <h3>Assamese VQA</h3>
+        <p>Datasets for visual question answering in Assamese. <a href="#pub-C4">[C4]</a></p>
+        <span class="chip plain">VQA</span>
+      </div>
+      <div class="card">
+        <h3>AsRED</h3>
+        <p>An Assamese reduplication dataset. <a href="#pub-C3">[C3]</a></p>
+        <span class="chip plain">Linguistics</span>
+      </div>
+      <div class="card">
+        <h3>Realis event corpus</h3>
+        <p>Annotated short stories in English and Assamese for realis event detection. <a href="#pub-C8">[C8]</a></p>
+        <span class="chip plain">NLP</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section class="panel" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience" tabindex="0">
+    <ol class="timeline">
+      <li class="now"><div class="card">
+        <span class="when">Aug 2026 – Present</span>
+        <h3>Guest Faculty</h3>
+        <p class="org">National Institute of Technology Meghalaya</p>
+        <p>Teaching C Programming and Software Engineering to Master of Computer Applications (MCA) students.</p>
+      </div></li>
+      <li><div class="card">
+        <span class="when">Feb 2026 – Aug 2026</span>
+        <h3>AI Research Intern</h3>
+        <p class="org">Accenture AI Lab, Bengaluru</p>
+        <p>Improved small vision-language models for chart understanding and multimodal numerical reasoning.</p>
+      </div></li>
+      <li><div class="card">
+        <span class="when">Nov 2024 – Apr 2025</span>
+        <h3>Computer Science Researcher</h3>
+        <p class="org">Turing</p>
+        <p>Data Analyst and LLM Trainer on the STEM, Multimodal and GAIA projects.</p>
+      </div></li>
+      <li><div class="card">
+        <span class="when">Jan 2023 – Jul 2024</span>
+        <h3>Freelance Faculty</h3>
+        <p class="org">Imarticus Learning</p>
+        <p>Taught Artificial Intelligence and Machine Learning courses.</p>
+      </div></li>
+      <li><div class="card">
+        <span class="when">Dec 2022 – May 2023</span>
+        <h3>Tutor</h3>
+        <p class="org">E&amp;ICT Academy, IIT Guwahati</p>
+        <p>Supported Data Analytics and Data Science courses.</p>
+      </div></li>
+      <li><div class="card">
+        <span class="when">Mar 2017 – Apr 2019</span>
+        <h3>Junior Research Fellow</h3>
+        <p class="org">Dept. of CSE, IIT Guwahati</p>
+        <p>e-Varaha: an information system for safe pork production in North Eastern India.</p>
+      </div></li>
+      <li><div class="card">
+        <span class="when">Aug 2016 – Feb 2017</span>
+        <h3>Project Fellow</h3>
+        <p class="org">Dept. of CSE, IIT Guwahati</p>
+        <p>Reducing cache access time in tiled chip multiprocessors.</p>
+      </div></li>
+    </ol>
+
+    <h2 class="section-title">Skills</h2>
+    <div class="card skills">
+      <div>
+        <h3>AI / ML</h3>
+        <div class="chips">
+          <span class="chip">Vision-Language Models</span><span class="chip">Multimodal Learning</span>
+          <span class="chip">Transformers</span><span class="chip">LLMs</span>
+          <span class="chip">CNN / RNN / LSTM</span><span class="chip">Efficient AI</span>
+        </div>
+      </div>
+      <div>
+        <h3>Programming &amp; tools</h3>
+        <div class="chips">
+          <span class="chip plain">Python</span><span class="chip plain">C / C++</span><span class="chip plain">PyTorch</span>
+          <span class="chip plain">TensorFlow</span><span class="chip plain">OpenCV</span><span class="chip plain">scikit-learn</span>
+          <span class="chip plain">NumPy</span><span class="chip plain">Pandas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TEACHING & TALKS ===================== -->
+  <section class="panel" id="panel-teaching" role="tabpanel" aria-labelledby="tab-teaching" tabindex="0">
+    <h2 class="section-title" style="margin-top:0">Teaching</h2>
+    <div class="three">
+      <div class="card">
+        <div class="icon" aria-hidden="true">🎓</div>
+        <p class="kicker">Aug 2026 – Present</p>
+        <h3>NIT Meghalaya</h3>
+        <p>C Programming and Software Engineering for MCA students.</p>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">🧠</div>
+        <p class="kicker">Jan 2023 – Jul 2024</p>
+        <h3>Imarticus Learning</h3>
+        <p>Artificial Intelligence and Machine Learning courses.</p>
+      </div>
+      <div class="card">
+        <div class="icon" aria-hidden="true">📚</div>
+        <p class="kicker">Dec 2022 – May 2023</p>
+        <h3>E&amp;ICT Academy, IIT Guwahati</h3>
+        <p>Tutor for Data Analytics and Data Science courses.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Invited talks &amp; workshops</h2>
+    <p class="muted">Resource person for programmes on Artificial Intelligence, Generative AI &amp; IoT, and Deep Learning.</p>
+    <ul class="talks">
+      <li class="card"><div class="icon" aria-hidden="true">🎤</div><div>
+        <h3>Harnessing the Power of AI: A Comprehensive FDP for Faculty and Researchers</h3>
+        <p class="org">E&amp;ICT Academy, IIT Guwahati</p></div></li>
+      <li class="card"><div class="icon" aria-hidden="true">🎤</div><div>
+        <h3>Summer Internship Program on Generative AI and Internet of Things</h3>
+        <p class="org">Assam Don Bosco University</p></div></li>
+      <li class="card"><div class="icon" aria-hidden="true">🎤</div><div>
+        <h3>High End Workshop on Fundamentals of Deep Learning</h3>
+        <p class="org">IIT Guwahati</p></div></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Pankaj Choudhury · Last updated November 2026</span>
+    <span>Contact: <a class="js-email" href="#" data-u="pankajchoudhury2048" data-d="gmail.com">pankajchoudhury2048 [at] gmail.com</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* ---------- Light / dark toggle ---------- */
+  var toggle = document.getElementById('theme-toggle');
+  function setIcon() { toggle.textContent = root.getAttribute('data-theme') === 'dark' ? '☀️' : '🌙'; }
+  setIcon();
+  toggle.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    setIcon();
+  });
+
+  /* ---------- Email (assembled here to slow down spam bots) ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.js-email'), function (a) {
+    a.href = 'mailto:' + a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+  });
+
+  /* ---------- Publication filter and search ---------- */
+  var filters = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+  var search = document.getElementById('pub-search');
+  var empty = document.getElementById('pub-empty');
+  var pubType = 'all';
+  function applyFilter() {
+    var q = search.value.trim().toLowerCase(), shown = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('.pub'), function (li) {
+      var ok = (pubType === 'all' || li.getAttribute('data-type') === pubType) &&
+               (!q || li.textContent.toLowerCase().indexOf(q) !== -1);
+      li.hidden = !ok;
+      if (ok) shown++;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.pub-group'), function (g) {
+      g.hidden = !g.querySelector('.pub:not([hidden])');
+    });
+    empty.hidden = shown > 0;
+  }
+  function resetFilter() {
+    pubType = 'all';
+    search.value = '';
+    filters.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-filter') === 'all' ? 'true' : 'false'); });
+    applyFilter();
+  }
+  filters.forEach(function (b) {
+    b.addEventListener('click', function () {
+      pubType = b.getAttribute('data-filter');
+      filters.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      applyFilter();
+    });
+  });
+  search.addEventListener('input', applyFilter);
+
+  /* ---------- Tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var tabList = document.querySelector('.tabs');
+  var tabsTop = document.getElementById('tabs-top');
+  var tabBar = document.querySelector('.tabbar');
+  function isTab(name) { return tabs.some(function (t) { return t.getAttribute('data-tab') === name; }); }
+
+  function show(name, opts) {
+    opts = opts || {};
+    var tab = tabs.filter(function (t) { return t.getAttribute('data-tab') === name; })[0] || tabs[0];
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    /* keep the active tab visible when the tab row scrolls sideways on phones */
+    tabList.scrollLeft = tab.offsetLeft - (tabList.clientWidth - tab.offsetWidth) / 2;
+    if (opts.hash !== false && history.replaceState) history.replaceState(null, '', '#' + tab.getAttribute('data-tab'));
+    if (opts.focus) tab.focus();
+    if (opts.scroll && window.pageYOffset > tabsTop.offsetTop) window.scrollTo(0, tabsTop.offsetTop);
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { show(t.getAttribute('data-tab'), { scroll: true }); });
+    t.addEventListener('keydown', function (e) {
+      var j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = tabs.length - 1;
+      if (j !== null) { e.preventDefault(); show(tabs[j].getAttribute('data-tab'), { focus: true }); }
+    });
+  });
+
+  /* Links like #publications open a tab; links like #pub-J1 open Publications and flash that paper. */
+  function route(id, scroll) {
+    if (!id) return false;
+    if (isTab(id)) { show(id, { scroll: scroll }); return true; }
+    var el = document.getElementById(id);
+    if (el && el.classList.contains('pub')) {
+      resetFilter();
+      show('publications', { hash: false });
+      if (history.replaceState) history.replaceState(null, '', '#' + id);
+      setTimeout(function () {
+        var y = el.getBoundingClientRect().top + window.pageYOffset - tabBar.offsetHeight - 16;
+        window.scrollTo(0, y);
+        el.classList.remove('flash');
+        void el.offsetWidth;
+        el.classList.add('flash');
+      }, 40);
+      return true;
+    }
+    return false;
+  }
+
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (a && route(a.getAttribute('href').slice(1), true)) e.preventDefault();
+  });
+  window.addEventListener('hashchange', function () { route(location.hash.slice(1), true); });
+
+  if (!route(location.hash.slice(1), false)) show('about', { hash: false });
+
+  /* ---------- Count-up numbers ---------- */
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!still && window.requestAnimationFrame) {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function (el) {
+      var n = +el.getAttribute('data-count'), t0 = null;
+      function step(ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / 900, 1);
+        el.textContent = Math.round(n * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+      setTimeout(function () { el.textContent = n; }, 1200);   /* always end on the real number */
+    });
+  }
+
+  /* ---------- Hero art: a vision-language model captions an image in 11 Indian scripts ---------- */
+  var art = document.querySelector('.hero-art');
+  if (art) {
+    var NS = 'http://www.w3.org/2000/svg';
+    var make = function (tag, attrs, parent) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      parent.appendChild(e);
+      return e;
+    };
+    var scripts = [
+      ['Assamese',  'অ ক খ গ ৰ ৱ'],
+      ['Hindi',     'अ क ख ग घ ङ'],
+      ['Tamil',     'அ க ங ச ஞ ட'],
+      ['Bengali',   'অ ক খ গ ঘ ঙ'],
+      ['Telugu',    'అ క ఖ గ ఘ ఙ'],
+      ['Gujarati',  'અ ક ખ ગ ઘ ઙ'],
+      ['Kannada',   'ಅ ಕ ಖ ಗ ಘ ಙ'],
+      ['Punjabi',   'ਅ ਕ ਖ ਗ ਘ ਙ'],
+      ['Malayalam', 'അ ക ഖ ഗ ഘ ങ'],
+      ['Odia',      'ଅ କ ଖ ଗ ଘ ଙ'],
+      ['Urdu',      'ا ب پ ت ٹ ث']
+    ];
+    var all = function (sel) { return Array.prototype.slice.call(art.querySelectorAll(sel)); };
+    var mark = function (el, name, on) { el.classList[on ? 'add' : 'remove'](name); };
+
+    /* 16 patch highlights (the attention heatmap) and 6 cross-attention lines */
+    var patches = [], lines = [];
+    for (var i = 0; i < 16; i++) {
+      patches.push(make('rect', { x: 6 + 28 * (i % 4), y: 26 + 28 * Math.floor(i / 4), width: 24, height: 24, rx: 4, 'class': 'patch' }, art.querySelector('.patches')));
+    }
+    for (var j = 0; j < 6; j++) lines.push(make('path', { 'class': 'attn' }, art.querySelector('.attn-lines')));
+
+    var vtoks = all('.vtok'), toks = all('.tok'), letters = all('.letter');
+    var enc = art.querySelector('.enc'), dec = art.querySelector('.dec');
+    var loss = art.querySelector('.loss'), lang = art.querySelector('.lang');
+
+    /* Patches holding objects (kite, string, child, sun) get attention most of the time. */
+    var objects = [1, 5, 9, 10, 14, 3];
+    var pickPatch = function () {
+      return Math.random() < 0.8 ? objects[Math.floor(Math.random() * objects.length)] : Math.floor(Math.random() * 16);
+    };
+    var curve = function (p, t) {
+      var px = 18 + 28 * (p % 4), py = 38 + 28 * Math.floor(p / 4), tx = 69 + 48 * t;
+      return 'M' + px + ' ' + py + 'C' + px + ' 200 ' + tx + ' 188 ' + tx + ' 196';
+    };
+
+    var reset = function (s) {
+      var chars = s[1].split(' ');
+      art.classList.remove('swap');
+      patches.forEach(function (p) { p.setAttribute('class', 'patch'); });
+      lines.forEach(function (l) { l.setAttribute('class', 'attn'); });
+      vtoks.concat(toks, letters).forEach(function (e) { mark(e, 'on', false); });
+      letters.forEach(function (e, t) { e.textContent = chars[t]; });
+      lang.textContent = s[0].toUpperCase();
+    };
+
+    /* The decoder emits token t: it attends to one patch, which glows; older attention fades. */
+    var emit = function (t) {
+      if (t > 0) { mark(lines[t - 1], 'on', false); mark(lines[t - 1], 'past', true); }
+      patches.forEach(function (p) { if (p.classList.contains('on')) { mark(p, 'on', false); mark(p, 'past', true); } });
+      var p = pickPatch();
+      lines[t].setAttribute('d', curve(p, t));
+      mark(lines[t], 'on', true);
+      mark(patches[p], 'past', false);
+      mark(patches[p], 'on', true);
+      mark(toks[t], 'on', true);
+      mark(letters[t], 'on', true);
+    };
+
+    var turn = 0;
+    var later = function (fn, ms) { setTimeout(fn, ms); };
+    var cycle = function () {
+      reset(scripts[turn++ % scripts.length]);
+      loss.classList.remove('run');
+      loss.getBoundingClientRect();              /* restart the loss-curve drawing */
+      loss.classList.add('run');
+      mark(enc, 'busy', true);
+      vtoks.forEach(function (v, k) { later(function () { mark(v, 'on', true); }, 120 * k); });
+      later(function () { mark(enc, 'busy', false); mark(dec, 'busy', true); }, 650);
+      letters.forEach(function (e, t) { later(function () { emit(t); }, 800 + 480 * t); });
+      later(function () { mark(dec, 'busy', false); }, 800 + 480 * 6);
+      later(function () { art.classList.add('swap'); }, 800 + 480 * 6 + 1500);
+      later(cycle, 800 + 480 * 6 + 1900);
+    };
+
+    if (still) {
+      /* Reduced motion: show one finished frame, no animation. */
+      reset(scripts[0]);
+      vtoks.forEach(function (v) { mark(v, 'on', true); });
+      letters.forEach(function (e, t) { emit(t); });
+    } else {
+      cycle();
+    }
+  }
+})();
+</script>
+</body>
+</html>
